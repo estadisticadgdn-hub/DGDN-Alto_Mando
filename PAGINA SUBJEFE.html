@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Panel de Informes - DGDN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0d1b2a;
+  --navy-2:#16293d;
+  --gold:#c8a84b;
+  --gold-soft:#e6d49a;
+  --cream:#f5f0e8;
+  --white:#ffffff;
+  --storm:#1f5f7a;
+  --ink:#0d1b2a;
+  --muted:#5d6b7a;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* ===== BARRA SUPERIOR ===== */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(13,27,42,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--gold);
+  padding-top:env(safe-area-inset-top);
+}
+.topbar-in{
+  max-width:780px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px 18px;
+}
+.marca{
+  font-family:'DM Serif Display',serif;
+  color:var(--gold);font-size:1.2rem;letter-spacing:2px;
+}
+.tag{
+  font-size:.68rem;font-weight:700;
+  letter-spacing:1.6px;text-transform:uppercase;
+  color:#cfd8e3;
+  border:1px solid rgba(200,168,75,.55);
+  border-radius:999px;
+  padding:5px 12px;
+  white-space:nowrap;
+}
+
+/* ===== HERO ===== */
+.wrap{max-width:780px;margin:0 auto;padding:0 18px;width:100%}
+.hero{
+  margin-top:20px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(13,27,42,.18);
+}
+.hero-main{
+  position:relative;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 45%,var(--storm) 100%);
+  background-size:200% 200%;
+  animation:fluir 14s ease-in-out infinite alternate;
+  color:var(--white);
+  padding:34px 24px 32px;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;
+}
+.hero-main::before,.hero-main::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none;
+}
+.hero-main::before{
+  width:230px;height:230px;right:-70px;top:-80px;
+  background:radial-gradient(circle,rgba(200,168,75,.55),transparent 70%);
+  animation:flotar 9s ease-in-out infinite alternate;
+}
+.hero-main::after{
+  width:200px;height:200px;left:-70px;bottom:-90px;
+  background:radial-gradient(circle,rgba(255,255,255,.20),transparent 70%);
+  animation:flotar 11s ease-in-out infinite alternate-reverse;
+}
+.hero-main > *{position:relative;z-index:1}
+
+/* Placeholder del escudo: reemplazar por <img src="data:image/png;base64,..." class="escudo" alt="Escudo DGDN"> */
+.escudo-box{
+  width:112px;height:112px;
+  border-radius:14px;
+  border:2px dashed rgba(230,212,154,.6);
+  background:rgba(255,255,255,.05);
+  display:grid;place-items:center;
+  text-align:center;
+  padding:8px;
+  margin-bottom:20px;
+  font-size:.6rem;font-weight:700;line-height:1.35;
+  letter-spacing:1px;
+  color:var(--gold-soft);
+}
+.escudo{
+  width:112px;height:auto;
+  margin-bottom:20px;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  animation:entrada .9s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.hero-main h1{
+  font-family:'DM Serif Display',serif;
+  font-weight:400;
+  font-size:clamp(1.45rem,6vw,2.15rem);
+  line-height:1.14;
+  margin:0 0 14px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  animation:entrada .9s .1s cubic-bezier(.2,.8,.2,1) both;
+}
+.hero-main h2{
+  margin:0;
+  font-size:.82rem;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold-soft);
+  padding-top:13px;
+  border-top:2px solid var(--gold);
+  display:inline-block;
+  animation:entrada .9s .2s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ===== SECCIÓN ===== */
+.seccion{margin-top:34px}
+.seccion-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.seccion-head::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.seccion-head h3{
+  margin:0;
+  font-family:'DM Serif Display',serif;
+  font-weight:400;font-size:1.35rem;color:var(--navy);
+}
+
+/* ===== ACCESO PRINCIPAL ===== */
+.acceso{
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:16px;
+  width:100%;
+  background:var(--white);
+  border-top:5px solid var(--gold);
+  border-radius:var(--radius);
+  padding:22px 20px;
+  box-shadow:0 10px 26px rgba(13,27,42,.13);
+  transition:transform .3s ease, box-shadow .3s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.acceso::before{
+  content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(200,168,75,.22),transparent);
+  transform:skewX(-20deg);transition:left .6s ease;
+}
+.acceso:hover::before,.acceso:active::before{left:130%}
+.acceso:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(13,27,42,.22)}
+.acceso:active{transform:scale(.985)}
+
+.acceso .icono{
+  flex:none;
+  width:54px;height:54px;border-radius:14px;
+  display:grid;place-items:center;
+  background:var(--navy);color:var(--gold-soft);
+  transition:transform .3s ease, background .3s ease, color .3s ease;
+}
+.acceso .icono svg{width:28px;height:28px}
+.acceso:hover .icono{transform:rotate(-6deg) scale(1.06);background:var(--gold);color:var(--navy)}
+
+.acceso .txt{display:flex;flex-direction:column;text-align:left;line-height:1.25;min-width:0}
+.acceso .titulo{
+  font-weight:700;
+  font-size:1rem;
+  letter-spacing:.2px;
+  text-transform:uppercase;
+  color:var(--navy);
+}
+.acceso .sub{
+  margin-top:5px;
+  font-size:.8rem;font-weight:500;line-height:1.4;
+  color:var(--muted);
+}
+.acceso .flecha{
+  margin-left:auto;flex:none;
+  font-size:1.5rem;line-height:1;
+  color:var(--gold);
+  transition:transform .3s ease;
+}
+.acceso:hover .flecha{transform:translateX(5px)}
+
+.nota{
+  margin:16px 2px 0;
+  font-size:.78rem;line-height:1.5;
+  color:var(--muted);
+}
+.nota strong{color:var(--navy)}
+
+/* ===== PIE ===== */
+footer{
+  margin-top:auto;
+  padding:28px 18px calc(28px + env(safe-area-inset-bottom));
+  background:var(--navy);
+  border-top:4px solid var(--gold);
+  color:#b9c5d3;
+  text-align:center;
+  font-size:.82rem;
+  line-height:1.5;
+}
+footer strong{
+  display:block;
+  font-family:'DM Serif Display',serif;
+  font-weight:400;font-size:1.05rem;
+  color:var(--gold);
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+footer p{margin:6px 0 0}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fluir{from{background-position:0% 50%}to{background-position:100% 50%}}
+@keyframes flotar{from{transform:translate(0,0)}to{transform:translate(-26px,22px)}}
+@keyframes entrada{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:420px){
+  .wrap{padding:0 14px}
+  .hero-main{padding:28px 20px 26px}
+  .acceso{padding:18px 16px;gap:13px}
+  .acceso .icono{width:48px;height:48px;border-radius:12px}
+  .acceso .icono svg{width:24px;height:24px}
+  .acceso .titulo{font-size:.92rem}
+  .acceso .sub{font-size:.76rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header class="topbar">
+  <div class="topbar-in">
+    <span class="marca">DGDN</span>
+    <span class="tag">Alto Mando</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <!-- 👇 PEGÁ ACÁ EL ESCUDO: reemplazá este div por la etiqueta <img> con el base64
+           <img src="data:image/png;base64,...." alt="Escudo DGDN" class="escudo"> -->
+      <div class="escudo-box">PEGÁ ACÁ EL ESCUDO</div>
+
+      <h1>Dirección General Departamentales Norte</h1>
+      <h2>Panel de Informes · Alto Mando</h2>
+    </div>
+  </section>
+
+  <!-- ACCESOS -->
+  <section class="seccion" id="informes">
+    <div class="seccion-head"><h3>Informes actualizados</h3></div>
+
+    <a class="acceso"
+       href="https://script.google.com/macros/s/AKfycbz9_0gmXZxLwNz8uzECqnNo8V0azxM-APqmdprm4Z4JLz1_zzwiTNpVniS6TIJRG1z9PA/exec?page=visor"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Abrir Planes de Contingencias por Localidad">
+      <span class="icono" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/>
+          <circle cx="12" cy="10" r="2.6"/>
+        </svg>
+      </span>
+      <span class="txt">
+        <span class="titulo">Planes de Contingencias por Localidad</span>
+        <span class="sub">Visor con la información actualizada de cada localidad</span>
+      </span>
+      <span class="flecha" aria-hidden="true">›</span>
+    </a>
+
+    <p class="nota">
+      <strong>Acceso exclusivo Alto Mando.</strong> Los informes de los distintos sistemas de la
+      Dirección General Departamentales Norte se actualizan permanentemente.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <strong>DIRECCIÓN GENERAL DEPARTAMENTALES NORTE</strong>
+  Policía de la Provincia de Córdoba
+  <p>Comisario Lic. Hugo V. Callejo</p>
+</footer>
+
+</body>
+</html>
